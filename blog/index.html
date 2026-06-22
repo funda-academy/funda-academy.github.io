@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Blog — funda-academy</title>
+<meta name="description" content="Writing on infrastructure, platform engineering, and developer education from the funda-academy team."/>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@600;700&family=Inter:wght@300;400;500&family=Space+Mono:wght@700&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --ink: #f0ede8;
+    --ink-muted: #9a9a94;
+    --ink-faint: #5a5a55;
+    --surface: #0f0f0d;
+    --surface-alt: #161614;
+    --surface-dark: #000000;
+    --accent: #d4502a;
+    --accent-hover: #e05e38;
+    --accent-light: rgba(212,80,42,0.12);
+    --border: #2a2a26;
+    --serif: 'Lora', Georgia, serif;
+    --sans: 'Inter', sans-serif;
+    --mono: 'Space Mono', monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--sans); background: var(--surface); color: var(--ink); font-size: 16px; line-height: 1.7; overflow-x: hidden; }
+
+  /* ── Nav ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.1rem 2.5rem;
+    background: rgba(15,15,13,0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: var(--sans); font-size: 0.875rem; font-weight: 500;
+    color: var(--ink); text-decoration: none; letter-spacing: -0.01em;
+  }
+  .nav-links { list-style: none; display: flex; gap: 2.5rem; align-items: center; }
+  .nav-links a { font-size: 0.875rem; color: var(--ink-muted); text-decoration: none; font-weight: 400; transition: color 0.2s; }
+  .nav-links a:hover, .nav-links a[aria-current="page"] { color: var(--ink); }
+  .nav-cta {
+    background: var(--accent) !important; color: #fff !important;
+    padding: 0.5rem 1.25rem !important; border-radius: 6px !important;
+    font-weight: 500 !important; transition: background 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--accent-hover) !important; }
+
+  /* ── Page header ── */
+  .page-header {
+    padding: 8rem 2.5rem 4rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .page-header-inner { max-width: 1000px; margin: 0 auto; }
+  .page-tag {
+    font-family: var(--mono); font-size: 0.65rem; font-weight: 700;
+    color: var(--ink-faint); letter-spacing: 0.18em; text-transform: uppercase;
+    margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.75rem;
+  }
+  .page-tag::after { content: ''; flex: 0 0 32px; height: 1px; background: var(--border); }
+  .page-header h1 {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700; line-height: 1.1; letter-spacing: -0.02em;
+    margin-bottom: 0.75rem;
+  }
+  .page-header p { font-size: 1rem; color: var(--ink-muted); font-weight: 300; max-width: 480px; }
+
+  /* ── Post list ── */
+  .posts-section { padding: 4rem 2.5rem 6rem; }
+  .container { max-width: 1000px; margin: 0 auto; }
+
+  .post-list { display: flex; flex-direction: column; gap: 0; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+
+  .post-row {
+    display: flex; gap: 2.5rem; align-items: flex-start;
+    padding: 2rem 2rem;
+    background: var(--surface-alt);
+    border-bottom: 1px solid var(--border);
+    text-decoration: none; color: var(--ink);
+    transition: background 0.2s;
+    position: relative;
+  }
+  .post-row:last-child { border-bottom: none; }
+  .post-row:hover { background: #1e1e1b; }
+
+  .post-date {
+    font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.1em;
+    color: var(--ink-faint); flex-shrink: 0; padding-top: 0.35rem;
+    width: 5.5rem; text-transform: uppercase;
+  }
+  .post-body { flex: 1; }
+  .post-title {
+    font-family: var(--serif); font-size: 1.15rem; font-weight: 700;
+    line-height: 1.3; margin-bottom: 0.4rem;
+    transition: color 0.2s;
+  }
+  .post-row:hover .post-title { color: var(--accent); }
+  .post-excerpt { font-size: 0.875rem; color: var(--ink-muted); line-height: 1.65; margin-bottom: 0.75rem; }
+  .post-tag {
+    font-size: 0.63rem; font-weight: 500; letter-spacing: 0.1em;
+    text-transform: uppercase; padding: 0.18rem 0.6rem; border-radius: 4px;
+    background: transparent; color: var(--ink-faint); border: 1px solid var(--border);
+  }
+  .post-arrow {
+    color: var(--accent); font-size: 1.1rem; flex-shrink: 0;
+    opacity: 0; transition: opacity 0.15s, transform 0.15s;
+    padding-top: 0.2rem;
+  }
+  .post-row:hover .post-arrow { opacity: 1; transform: translateX(3px); }
+
+  /* ── Footer ── */
+  footer {
+    padding: 2rem 2.5rem;
+    border-top: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-brand { font-size: 0.875rem; font-weight: 500; color: var(--ink); text-decoration: none; }
+  .footer-links { display: flex; gap: 2rem; list-style: none; }
+  .footer-links a { font-size: 0.8rem; color: var(--ink-faint); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--ink); }
+  .footer-copy { font-size: 0.78rem; color: var(--ink-faint); }
+
+  /* ── Fade-in ── */
+  .fade-in { opacity: 0; transform: translateY(14px); transition: opacity 0.5s ease, transform 0.5s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+  @media (prefers-reduced-motion: reduce) {
+    .fade-in { transition: none; opacity: 1; transform: none; }
+    .post-arrow { opacity: 1; }
+  }
+
+  /* ── Mobile ── */
+  @media (max-width: 720px) {
+    nav { padding: 1rem 1.25rem; }
+    .nav-links { display: none; }
+    .page-header { padding: 7rem 1.25rem 3rem; }
+    .posts-section { padding: 3rem 1.25rem 5rem; }
+    .post-row { flex-wrap: wrap; gap: 0.75rem; }
+    .post-date { width: auto; padding-top: 0; }
+    footer { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<nav aria-label="Main navigation">
+  <a href="/" class="nav-logo">funda-academy</a>
+  <ul class="nav-links">
+    <li><a href="/#tracks">Tracks</a></li>
+    <li><a href="/blog" aria-current="page">Blog</a></li>
+    <li><a href="/#tracks" class="nav-cta">Browse tracks</a></li>
+  </ul>
+</nav>
+
+<main>
+  <header class="page-header">
+    <div class="page-header-inner">
+      <p class="page-tag fade-in">Writing</p>
+      <h1 class="fade-in">From the team.</h1>
+      <p class="fade-in">Infrastructure, platform engineering, and thoughts on how developers actually learn.</p>
+    </div>
+  </header>
+
+  <section class="posts-section">
+    <div class="container">
+      <p class="fade-in" style="color: var(--ink-faint); font-size: 0.9rem;">Posts coming soon.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <a href="/" class="footer-brand">funda-academy</a>
+  <ul class="footer-links" aria-label="Footer links">
+    <li><a href="/#tracks">Tracks</a></li>
+    <li><a href="/blog">Blog</a></li>
+    <li><a href="#">About</a></li>
+  </ul>
+  <span class="footer-copy">© 2026 funda-academy</span>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

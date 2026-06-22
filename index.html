@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>funda-academy — Developer Education</title>
+<meta name="description" content="Practical, structured tracks for engineers who need production-grade skills. Built for African developers."/>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@600;700&family=Inter:wght@300;400;500&family=Space+Mono:wght@700&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --ink: #f0ede8;
+    --ink-muted: #9a9a94;
+    --ink-faint: #5a5a55;
+    --surface: #0f0f0d;
+    --surface-alt: #161614;
+    --surface-dark: #000000;
+    --accent: #d4502a;
+    --accent-hover: #e05e38;
+    --accent-light: rgba(212,80,42,0.12);
+    --border: #2a2a26;
+    --serif: 'Lora', Georgia, serif;
+    --sans: 'Inter', sans-serif;
+    --mono: 'Space Mono', monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--sans); background: var(--surface); color: var(--ink); font-size: 16px; line-height: 1.7; overflow-x: hidden; }
+
+  /* ── Nav ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.1rem 2.5rem;
+    background: rgba(15,15,13,0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: var(--sans); font-size: 0.875rem; font-weight: 500;
+    color: var(--ink); text-decoration: none; letter-spacing: -0.01em;
+  }
+  .nav-logo em { font-style: normal; color: inherit; }
+  .nav-links { list-style: none; display: flex; gap: 2.5rem; align-items: center; }
+  .nav-links a { font-size: 0.875rem; color: var(--ink-muted); text-decoration: none; font-weight: 400; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-cta {
+    background: var(--accent) !important; color: #fff !important;
+    padding: 0.5rem 1.25rem !important; border-radius: 6px !important;
+    font-weight: 500 !important; transition: background 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--accent-hover) !important; }
+
+  /* ── Hero — left-aligned (intentional departure from funda-kates) ── */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 9rem 2.5rem 5rem;
+  }
+  .hero-inner { max-width: 1000px; margin: 0 auto; width: 100%; }
+  .hero-tag {
+    font-family: var(--mono); font-size: 0.65rem; font-weight: 700;
+    color: var(--ink-faint); letter-spacing: 0.18em; text-transform: uppercase;
+    margin-bottom: 2rem; display: flex; align-items: center; gap: 0.75rem;
+  }
+  .hero-tag::after { content: ''; flex: 0 0 32px; height: 1px; background: var(--border); }
+
+  h1 {
+    font-family: var(--serif);
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    font-weight: 700; line-height: 1.08; letter-spacing: -0.025em;
+    margin-bottom: 1.5rem; max-width: 680px;
+  }
+  .hero-sub {
+    font-size: 1.1rem; color: var(--ink-muted); max-width: 460px;
+    margin-bottom: 2.75rem; font-weight: 300; line-height: 1.75;
+  }
+  .hero-actions { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-block; background: var(--accent); color: #fff;
+    padding: 0.9rem 2.25rem; border-radius: 6px; font-weight: 500; font-size: 1rem;
+    text-decoration: none; transition: background 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { background: var(--accent-hover); transform: translateY(-1px); }
+  .btn-ghost {
+    display: inline-block; color: var(--ink-muted); font-size: 0.875rem;
+    text-decoration: none; font-weight: 400; transition: color 0.2s;
+  }
+  .btn-ghost:hover { color: var(--ink); }
+
+  .hero-rule { border: none; border-top: 1px solid var(--border); margin-top: 4.5rem; }
+  .hero-meta {
+    display: flex; gap: 3rem; padding-top: 2.25rem; flex-wrap: wrap;
+  }
+  .hero-meta-item .val {
+    font-family: var(--serif); font-size: 1.8rem; font-weight: 700;
+    color: var(--ink); display: block; line-height: 1.1;
+  }
+  .hero-meta-item .lbl {
+    font-size: 0.7rem; color: var(--ink-faint); text-transform: uppercase;
+    letter-spacing: 0.1em; margin-top: 0.2rem; display: block;
+  }
+
+  /* ── Shared section ── */
+  section { padding: 6rem 2.5rem; }
+  .container { max-width: 1000px; margin: 0 auto; }
+  .section-label {
+    font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--ink-faint); margin-bottom: 0.75rem; font-weight: 500;
+  }
+  h2 {
+    font-family: var(--serif);
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; margin-bottom: 0.75rem;
+  }
+  .section-intro {
+    font-size: 1rem; color: var(--ink-muted); max-width: 520px;
+    margin-bottom: 3rem; font-weight: 300; line-height: 1.7;
+  }
+
+  /* ── Track list ── */
+  #tracks { background: var(--surface-alt); }
+  .track-list { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+
+  .track-row {
+    display: flex; align-items: center; gap: 2rem;
+    padding: 2rem 2rem; background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    text-decoration: none; color: var(--ink);
+    transition: background 0.2s;
+    position: relative;
+  }
+  .track-row:last-child { border-bottom: none; }
+  a.track-row:hover { background: var(--accent-light); }
+  .track-row.inactive { cursor: default; }
+
+  .track-id {
+    font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.12em;
+    color: var(--ink-faint); flex-shrink: 0; width: 1.75rem;
+    text-transform: uppercase;
+  }
+  .track-body { flex: 1; }
+  .track-name {
+    font-family: var(--serif); font-size: 1.15rem; font-weight: 700;
+    margin-bottom: 0.3rem; line-height: 1.3;
+  }
+  .track-desc { font-size: 0.875rem; color: var(--ink-muted); line-height: 1.65; }
+  .track-chips { display: flex; gap: 0.6rem; align-items: center; margin-top: 0.6rem; }
+
+  .chip {
+    font-size: 0.63rem; font-weight: 500; letter-spacing: 0.1em;
+    text-transform: uppercase; padding: 0.18rem 0.6rem; border-radius: 4px;
+  }
+  .chip-live { background: var(--accent); color: #fff; }
+  .chip-soon {
+    background: transparent; color: var(--ink-muted);
+    border: 1px solid var(--border);
+  }
+  .chip-topic { color: var(--ink-faint); font-size: 0.72rem; text-transform: none; letter-spacing: 0; font-weight: 400; }
+
+  .track-arrow {
+    color: var(--accent); font-size: 1.1rem; flex-shrink: 0;
+    opacity: 0; transition: opacity 0.15s, transform 0.15s;
+  }
+  a.track-row:hover .track-arrow { opacity: 1; transform: translateX(3px); }
+
+  /* ── Waitlist ── */
+  #waitlist { background: var(--surface-alt); border-top: 1px solid var(--border); }
+
+  .waitlist-form { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 0.5rem; }
+  .waitlist-form input {
+    flex: 1; min-width: 220px;
+    padding: 0.8rem 1rem; border-radius: 6px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--ink); font-family: var(--sans); font-size: 0.9rem;
+    transition: border-color 0.2s; outline: none;
+  }
+  .waitlist-form input::placeholder { color: var(--ink-faint); }
+  .waitlist-form input:focus { border-color: var(--accent); }
+  .waitlist-form button {
+    padding: 0.8rem 1.75rem; background: var(--accent); color: #fff;
+    border: none; border-radius: 6px; font-family: var(--sans);
+    font-size: 0.9rem; font-weight: 500; cursor: pointer; transition: background 0.2s;
+    white-space: nowrap;
+  }
+  .waitlist-form button:hover { background: var(--accent-hover); }
+  .waitlist-note { margin-top: 1rem; font-size: 0.78rem; color: var(--ink-faint); }
+
+  /* ── Footer ── */
+  footer {
+    padding: 2rem 2.5rem;
+    border-top: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-brand { font-size: 0.875rem; font-weight: 500; color: var(--ink); text-decoration: none; }
+  .footer-brand em { font-style: normal; color: inherit; }
+  .footer-links { display: flex; gap: 2rem; list-style: none; }
+  .footer-links a { font-size: 0.8rem; color: var(--ink-faint); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--ink); }
+  .footer-copy { font-size: 0.78rem; color: var(--ink-faint); }
+
+  /* ── Fade-in ── */
+  .fade-in { opacity: 0; transform: translateY(14px); transition: opacity 0.5s ease, transform 0.5s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fade-in { transition: none; opacity: 1; transform: none; }
+    .track-arrow { opacity: 1; }
+  }
+
+  /* ── Mobile ── */
+  @media (max-width: 720px) {
+    nav { padding: 1rem 1.25rem; }
+    .nav-links { display: none; }
+    .hero { padding: 7rem 1.25rem 4rem; }
+    section { padding: 4rem 1.25rem; }
+    .hero-meta { gap: 2rem; }
+    .hero-actions { flex-direction: column; align-items: flex-start; }
+    .track-row { gap: 1.25rem; }
+    footer { flex-direction: column; align-items: flex-start; }
+    .footer-links { flex-wrap: wrap; gap: 1.25rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav aria-label="Main navigation">
+  <a href="/" class="nav-logo">funda<em>-academy</em></a>
+  <ul class="nav-links">
+    <li><a href="#tracks">Tracks</a></li>
+    <li><a href="/blog">Blog</a></li>
+    <li><a href="#tracks" class="nav-cta">Browse tracks</a></li>
+  </ul>
+</nav>
+
+<main>
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-inner">
+      <p class="hero-tag fade-in">Developer Education</p>
+      <h1 class="fade-in">Practical tracks for engineers who ship.</h1>
+      <p class="hero-sub fade-in">Structured programs on the infrastructure and platform skills that matter in production — taught by engineers, for engineers.</p>
+      <div class="hero-actions fade-in">
+        <a href="#tracks" class="btn-primary">Browse tracks</a>
+        <a href="#waitlist" class="btn-ghost">New tracks coming — get notified →</a>
+      </div>
+      <hr class="hero-rule fade-in"/>
+      <div class="hero-meta fade-in">
+        <div class="hero-meta-item">
+          <span class="val">1</span>
+          <span class="lbl">Track live</span>
+        </div>
+        <div class="hero-meta-item">
+          <span class="val">1</span>
+          <span class="lbl">In development</span>
+        </div>
+        <div class="hero-meta-item">
+          <span class="val">ZA</span>
+          <span class="lbl">Built here</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tracks -->
+  <section id="tracks">
+    <div class="container">
+      <p class="section-label fade-in">Learning tracks</p>
+      <h2 class="fade-in">Pick your discipline.</h2>
+      <p class="section-intro fade-in">Each track is a focused, job-ready program built around one domain. No filler — straight into the skills that show up in production interviews and on-call rotations.</p>
+
+      <div class="track-list fade-in">
+
+        <a href="#" class="track-row" aria-label="funda-kates — Kubernetes track, live now">
+          <span class="track-id">01</span>
+          <div class="track-body">
+            <div class="track-name">funda-kates</div>
+            <div class="track-desc">Kubernetes from zero to production-ready. Deployments, networking, RBAC, Helm, and real cluster operations — the way engineers actually use it.</div>
+            <div class="track-chips">
+              <span class="chip chip-live">Live now</span>
+              <span class="chip chip-topic">Kubernetes · Platform Engineering</span>
+            </div>
+          </div>
+          <span class="track-arrow" aria-hidden="true">→</span>
+        </a>
+
+        <div class="track-row inactive" aria-label="Track 02 — coming soon">
+          <span class="track-id">02</span>
+          <div class="track-body">
+            <div class="track-name">Coming soon</div>
+            <div class="track-desc">Next track in development.</div>
+            <div class="track-chips">
+              <span class="chip chip-soon">Coming soon</span>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Waitlist -->
+  <section id="waitlist">
+    <div class="container">
+      <p class="section-label fade-in">Stay ahead</p>
+      <h2 class="fade-in">New tracks, early access.</h2>
+      <p class="section-intro fade-in">Drop your email and we'll tell you when the next track opens — before the general announcement goes out.</p>
+      <form class="waitlist-form fade-in" onsubmit="return false;" aria-label="Waitlist signup">
+        <input type="email" placeholder="your@email.com" aria-label="Email address" autocomplete="email"/>
+        <button type="submit">Notify me</button>
+      </form>
+      <p class="waitlist-note fade-in">No spam. One email when a new track drops.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <a href="/" class="footer-brand">funda<em>-academy</em></a>
+  <ul class="footer-links" aria-label="Footer links">
+    <li><a href="#tracks">Tracks</a></li>
+    <li><a href="/blog">Blog</a></li>
+    <li><a href="#">About</a></li>
+  </ul>
+  <span class="footer-copy">© 2026 funda-academy</span>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
