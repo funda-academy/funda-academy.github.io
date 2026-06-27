@@ -5,6 +5,25 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Funda-Academy — Developer Education</title>
 <meta name="description" content="Practical, structured tracks for engineers who need production-grade skills. Built for African developers."/>
+<meta name="author" content="Mziyabo Singwango"/>
+<meta name="robots" content="index, follow"/>
+<link rel="canonical" href="https://funda.academy"/>
+
+<!-- Open Graph -->
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://funda.academy"/>
+<meta property="og:title" content="Funda-Academy — Developer Education"/>
+<meta property="og:description" content="Practical, structured tracks for engineers who need production-grade skills. Built for African developers."/>
+<meta property="og:image" content="https://funda.academy/assets/og-image.png"/>
+<meta property="og:locale" content="en_ZA"/>
+<meta property="og:site_name" content="Funda-Academy"/>
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Funda-Academy — Developer Education"/>
+<meta name="twitter:description" content="Practical, structured tracks for engineers who need production-grade skills. Built for African developers."/>
+<meta name="twitter:image" content="https://funda.academy/assets/og-image.png"/>
+
 <link href="https://fonts.googleapis.com/css2?family=Lora:wght@600;700&family=Inter:wght@300;400;500&family=Space+Mono:wght@700&display=swap" rel="stylesheet"/>
 <style>
   :root {
@@ -167,25 +186,26 @@
   /* ── Waitlist ── */
   #waitlist { background: var(--surface-alt); border-top: 1px solid var(--border); }
 
-  .waitlist-form { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 0.5rem; }
-  .waitlist-form input {
-    flex: 1; min-width: 220px;
-    padding: 0.8rem 1rem; border-radius: 6px;
-    border: 1px solid var(--border);
-    background: var(--surface);
+  .waitlist-form { max-width: 480px; }
+  .form-group { margin-bottom: 1rem; }
+  .form-group label { display: block; font-size: 0.78rem; font-weight: 500; color: var(--ink-muted); margin-bottom: 0.4rem; }
+  .form-group input, .form-group select {
+    width: 100%; padding: 0.7rem 1rem; border-radius: 6px;
+    border: 1px solid var(--border); background: var(--surface);
     color: var(--ink); font-family: var(--sans); font-size: 0.9rem;
-    transition: border-color 0.2s; outline: none;
+    transition: border-color 0.2s; outline: none; appearance: none;
   }
-  .waitlist-form input::placeholder { color: var(--ink-faint); }
-  .waitlist-form input:focus { border-color: var(--accent); }
-  .waitlist-form button {
-    padding: 0.8rem 1.75rem; background: var(--accent); color: #fff;
-    border: none; border-radius: 6px; font-family: var(--sans);
-    font-size: 0.9rem; font-weight: 500; cursor: pointer; transition: background 0.2s;
-    white-space: nowrap;
+  .form-group input::placeholder { color: var(--ink-faint); }
+  .form-group select option { background: var(--surface); color: var(--ink); }
+  .form-group input:focus, .form-group select:focus { border-color: var(--accent); }
+  .submit-btn {
+    margin-top: 0.5rem; display: block; background: var(--accent); color: #fff;
+    border: none; padding: 0.85rem 2rem; border-radius: 6px;
+    font-family: var(--sans); font-size: 0.95rem; font-weight: 500;
+    cursor: pointer; transition: background 0.2s;
   }
-  .waitlist-form button:hover { background: var(--accent-hover); }
-  .waitlist-note { margin-top: 1rem; font-size: 0.78rem; color: var(--ink-faint); }
+  .submit-btn:hover { background: var(--accent-hover); }
+  .form-note { font-size: 0.75rem; color: var(--ink-faint); margin-top: 0.75rem; }
 
   /* ── Footer ── */
   footer {
@@ -309,11 +329,25 @@
       <p class="section-label fade-in">Stay ahead</p>
       <h2 class="fade-in">New tracks, early access.</h2>
       <p class="section-intro fade-in">Drop your email and we'll tell you when the next track opens — before the general announcement goes out.</p>
-      <form class="waitlist-form fade-in" onsubmit="return false;" aria-label="Waitlist signup">
-        <input type="email" placeholder="your@email.com" aria-label="Email address" autocomplete="email"/>
-        <button type="submit">Notify me</button>
+      <form class="waitlist-form fade-in" action="https://docs.google.com/forms/d/e/1FAIpQLSe7iedlRR2elvd1-RGXBqhCbMi18WWszPIXYm7vUnIklqUvCw/formResponse" method="POST" target="_blank">
+        <div class="form-group">
+          <label for="w-email">Email address</label>
+          <input type="email" id="w-email" name="entry.1069801419" placeholder="sipho@example.com" required autocomplete="email"/>
+        </div>
+        <div class="form-group">
+          <label for="w-interest">What are you most interested in?</label>
+          <select id="w-interest" name="entry.1928213218" required>
+            <option value="" disabled selected>Select a track</option>
+            <option value="Kubernetes & Platform Engineering">Kubernetes &amp; Platform Engineering</option>
+            <option value="CI/CD & GitOps">CI/CD &amp; GitOps</option>
+            <option value="Cloud Fundamentals">Cloud Fundamentals</option>
+            <option value="All of the above">All of the above</option>
+          </select>
+        </div>
+        <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;"/>
+        <button type="submit" class="submit-btn">Notify me →</button>
+        <p class="form-note">No spam. One email when a new track drops.</p>
       </form>
-      <p class="waitlist-note fade-in">No spam. One email when a new track drops.</p>
     </div>
   </section>
 
